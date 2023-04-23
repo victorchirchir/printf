@@ -1,125 +1,66 @@
 #include "main.h"
-#include <unistd.h>
-#include <stdlib.h>
-#include <stdarg.h>
-#include <stdio.h>
+void print_buffer(char buffer[], int *buff_ind);
 /**
- * print_char - prints a character to stdout
- * @arg: the argument to print (a character)
+ * _printf - prints anything
+ * @format: content to be printed
  * Return: the number of characters printed (always 1)
- */
-int print_char(va_list arg)
-{
-	char c = va_arg(arg, int);
-
-	write(1, &c, 1);
-	return (1);
-}
-
-/**
- * print_string - prints a string to stdout
- * @arg: the argument to print (a string)
- * Return: the number of characters printed
- */
-int print_string(va_list arg)
-{
-	char *str = va_arg(arg, char*);
-	int len = 0;
-
-	while (str[len] != '\0')
-	len++;
-	write(1, str, len);
-	return (len);
-}
-
-/**
- * print_percent - prints a percent symbol to stdout
- * @arg: unused
- * Return: the number of characters printed (always 1)
- */
-int print_percent(va_list arg)
-{
-	(void)arg;
-	write(1, "%", 1);
-	return (1);
-}
-/**
- * print_int - prints out integers
- * @arg:int to be printed
- * Return: no of digits
- */
-int print_int(va_list arg)
-{
-	int i;
-	int num, count = 0, num_c, num_d = 1;
-	char buff[12];
-
-	num = va_arg(arg, int);
-	if (num < 0)
-	{
-		write(1, "-", 1);
-		num = -(num);
-		count++;
-	}
-	num_c = num;
-	while (num_c >= 10)
-	{
-		num_c /= 10;
-		num_d++;
-	}
-	for (i = num_d - 1; i >= 0; i--)
-	{
-		buff[i] = (num % 10) + '0';
-		num /= 10;
-	}
-	write(1, buff, num_d);
-	count += num_d;
-	return (count);
-}
-/**
- * _printf - prints a formatted string to stdout
- * @format: the format string
- * Return: the number of characters printed
  */
 int _printf(const char *format, ...)
 {
-	int count = 0;
-	va_list args;
-	int (*print_func)(va_list);
+	int i, printed = 0, print_c = 0;
+	int f, w, p, size, buff_i = 0;
+	va_list arg;
+	char buff[BUFF_SIZE];
 
-	va_start(args, format);
-	while (*format != '\0')
+	if (format == NULL)
 	{
-	if (*format == '%')
+		return (-1);
+	}
+	va_start(arg, format);
+
+	for (i = 0; format && format[i] != '\0' i++)
 	{
-		format++;
-		switch (*format)
+		if (format[i] != '%')
 		{
-			case 'c':
-				print_func = &print_char;
-				break;
-			case 's':
-				print_func = &print_string;
-				break;
-			case '%':
-				print_func = &print_percent;
-				break;
-			case 'i':
-			case 'd':
-				print_func = &print_int;
-				break;
-			default:
-				print_func = &print_percent;
-				format--;
-				break;
-		} count += print_func(args);
+			buff[buff_i++] = format[i];
+			if (buff_i == BUFF_SIZE)
+			{
+				print_buff(buff, &buff_i);
+			}
+			print_c++;
+		}
+		else
+		{
+			print_buff(buff, &buff_i);
+			f = get_f(format, &i);
+			w = get_w(format, &i, arg);
+			p = get_p(format, &i, arg);
+			size = get_size(format, &i);
+			++i;
+			printed = handle_print(format, &i, arg, buff, f, w, p, size);
+			if (printed == -1)
+				return (-1);
+			printed_c = printed_c + printed;
+		}
 	}
-	else
+
+	print_buffer(buff, &buff_i);
+
+	va_end(arg);
+
+	return (printed_c);
+}
+
+/**
+ * print_buffer - Prints contents if there is a buffer
+ * @buff: character arrays
+ * @buff_i: index where next char is added, representing length.
+ */
+void print_buffer(char buff[], int *buff_i)
+{
+	if (*buff_i > 0)
 	{
-		write(1, format, 1);
-		count++;
-	} format++;
+		write(1, &buff[0], *buff_i);
 	}
-	va_end(args);
-	return (count);
+	*buff_i = 0;
 }
