@@ -44,6 +44,39 @@ int print_percent(va_list arg)
 	return (1);
 }
 /**
+ * print_int - prints out integers
+ * @arg:int to be printed
+ * Return: no of digits
+ */
+int print_int(va_list arg)
+{
+	int i;
+	int num, count = 0, num_c, num_d = 1;
+	char buff[12];
+
+	num = va_arg(arg, int);
+	if (num < 0)
+	{
+		write(1, "-", 1);
+		num = -(num);
+		count++;
+	}
+	num_c = num;
+	while (num_c >= 10)
+	{
+		num_c /= 10;
+		num_d++;
+	}
+	for (i = num_d - 1; i >= 0; i--)
+	{
+		buff[i] = (num % 10) + '0';
+		num /= 10;
+	}
+	write(1, buff, num_d);
+	count += num_d;
+	return (count);
+}
+/**
  * _printf - prints a formatted string to stdout
  * @format: the format string
  * Return: the number of characters printed
@@ -71,19 +104,21 @@ int _printf(const char *format, ...)
 			case '%':
 				print_func = &print_percent;
 				break;
+			case 'i':
+			case 'd':
+				print_func = &print_int;
+				break;
 			default:
 				print_func = &print_percent;
 				format--;
 				break;
-		}
-		count += print_func(args);
+		} count += print_func(args);
 	}
 	else
 	{
 		write(1, format, 1);
 		count++;
-	}
-	format++;
+	} format++;
 	}
 	va_end(args);
 	return (count);
