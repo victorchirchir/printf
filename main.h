@@ -20,4 +20,6 @@ int print_rev(va_list typ, char buff[], int f, int w, int p, int size);
 int print_rot13str(va_list typ, char buff[], int f, int w, int p, int size);
 int get_f(const char *format, int *i);
 int get_p(const char *format, int *i, va_list args);
+int get_s(const char *format, int *i);
+int get_w(const char *format, int *i, va_list args);
 #endif 
