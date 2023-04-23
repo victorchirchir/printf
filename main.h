@@ -13,4 +13,11 @@ int print_str(va_list typ, char buff[], int f, int w, int p, int size);
 int print_perc(va_list typ, char buff[], int f, int w, int p, int size);
 int print_int(va_list typ, char buff[], int f, int w, int p, int size);
 int print_binary(va_list typ, char buff[], int f, int w, int p, int size);
+int print_ptr(va_list typ, char buff[], int f, int w, int p, int size);
+int print_nun_printable(va_list typ, char buff[], int f,
+		                int w, int p, int size);
+int print_rev(va_list typ, char buff[], int f, int w, int p, int size);
+int print_rot13str(va_list typ, char buff[], int f, int w, int p, int size);
+int get_f(const char *format, int *i);
+int get_p(const char *format, int *i, va_list args);
 #endif 
