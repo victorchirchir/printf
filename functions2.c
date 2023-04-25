@@ -20,7 +20,7 @@ int print_ptr(va_list typ, char buff[], int f, int w, int p, int size)
 
 	UNUSED(w);
 	UNUSED(size);
-	UNUSED(P);
+	UNUSED(p);
 	if (adress == NULL)
 		return (write(1, "(nil)", 5));
 	buff[BUFF_SIZE - 1] = '\0';
@@ -42,7 +42,7 @@ int print_ptr(va_list typ, char buff[], int f, int w, int p, int size)
 		extra_char = ' ', len++;
 	}
 	index++;
-	return (write_pointer(buffer, index, len, w, f,
+	return (write_ptr(buff, index, len, w, f,
 				padd, extra_char, padd_start));
 }
 
@@ -140,7 +140,7 @@ int print_rot13str(va_list typ, char buff[], int f, int w, int p, int size)
 	unsigned int i, j;
 	int count = 0;
 	char s_in[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-	char s_out = "NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm";
+	char s_out[] = "NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm";
 
 	s = va_arg(typ, char *);
 	UNUSED(buff);

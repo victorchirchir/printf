@@ -18,29 +18,29 @@ int _printf(const char *format, ...)
 	}
 	va_start(arg, format);
 
-	for (i = 0; format && format[i] != '\0' i++)
+	for (i = 0; format && format[i] != '\0'; i++)
 	{
 		if (format[i] != '%')
 		{
 			buff[buff_i++] = format[i];
 			if (buff_i == BUFF_SIZE)
 			{
-				print_buff(buff, &buff_i);
+				print_buffer(buff, &buff_i);
 			}
 			print_c++;
 		}
 		else
 		{
-			print_buff(buff, &buff_i);
+			print_buffer(buff, &buff_i);
 			f = get_f(format, &i);
 			w = get_w(format, &i, arg);
 			p = get_p(format, &i, arg);
-			size = get_size(format, &i);
+			size = get_s(format, &i);
 			++i;
 			printed = handle_print(format, &i, arg, buff, f, w, p, size);
 			if (printed == -1)
 				return (-1);
-			printed_c = printed_c + printed;
+			print_c = print_c + printed;
 		}
 	}
 
@@ -48,7 +48,7 @@ int _printf(const char *format, ...)
 
 	va_end(arg);
 
-	return (printed_c);
+	return (print_c);
 }
 
 /**

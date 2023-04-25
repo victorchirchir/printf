@@ -30,5 +30,5 @@ int get_w(const char *format, int *i, va_list args)
 		}
 	}
 	*i = k - 1;
-	return (width);
+	return (w);
 }

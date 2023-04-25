@@ -1,4 +1,4 @@
-nclude "main.h"
+#include "main.h"
 /**
  * print_char - prints a character
  * @typ: arguments list
@@ -131,7 +131,7 @@ int print_int(va_list typ, char buff[], int f, int w, int p, int size)
 
 	i++;
 
-	return (write_num(is_negative, i, buff, f, w, p, size));
+	return (write_number(is_negative, i, buff, f, w, p, size));
 }
 
 /**

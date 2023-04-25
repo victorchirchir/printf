@@ -9,7 +9,7 @@
 int get_f(const char *format, int *i)
 {
 	int j, k, f = 0;
-	const char FLAGS_C[] = {'-', '+', '0'. '#', ' ', '\0'};
+	const char FLAGS_C[] = {'-', '+', '0', '#', ' ', '\0'};
 	const int FLAGS_ARR[] = {F_MINUS, F_PLUS, F_ZERO, F_HASH, F_SPACE, 0};
 
 	for (k = *i + 1; format[k] != '\0'; k++)
